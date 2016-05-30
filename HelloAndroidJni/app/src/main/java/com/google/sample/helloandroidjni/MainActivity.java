@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+        ((TextView) findViewById(R.id.jni_msgView)).setText(getMsgFromJni());
     }
 
     @Override
@@ -49,4 +51,9 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    static {
+        System.loadLibrary("hello-android-jni");
+    }
+    public native String getMsgFromJni();
 }
