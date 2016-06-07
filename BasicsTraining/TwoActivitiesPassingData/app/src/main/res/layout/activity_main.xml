@@ -7,24 +7,31 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.google.sample.twoactivitiespassingdata.SecondActivity">
+    tools:context="com.google.sample.twoactivitiespassingdata.MainActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="User Text:"
-        android:id="@+id/textView2"
-        android:layout_centerVertical="true"
+        android:text="Enter Input Text"
+        android:id="@+id/textView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText"
+        android:layout_below="@+id/textView"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="OK"
-        android:id="@+id/button2"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:onClick="ok"/>
+        android:text="SHOW TEXT"
+        android:id="@+id/button"
+        android:layout_below="@+id/editText"
+        android:layout_alignParentStart="true"
+        android:onClick="showText"/>
 </RelativeLayout>
