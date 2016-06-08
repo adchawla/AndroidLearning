@@ -69,22 +69,16 @@ public class MainActivity extends AppCompatActivity {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                Bitmap image = getImage("https://img.new.livestream.com/accounts/00000000001a662c/1dfeaf60-4111-4c2b-b3c6-9a3026396a56.jpg");
+                final Bitmap image = getImage("https://img.new.livestream.com/accounts/00000000001a662c/1dfeaf60-4111-4c2b-b3c6-9a3026396a56.jpg");
                 if (image!=null) {
                     Log.i("MainActivity", "Image download complete");
-                    //imageView.setImageBitmap(image);
-                    //get access to the message object.
-                    Message msg = Message.obtain();
-
-                    // create a bundle that contains image
-                    Bundle bundle = new Bundle();
-                    bundle.putParcelable("IMAGE", image);
-
-                    // attach the bundle to message
-                    msg.setData(bundle);
-
-                    //send message to the handler
-                    imageHandler.sendMessage(msg);
+                    Runnable r = new Runnable() {
+                        @Override
+                        public void run() {
+                            imageView.setImageBitmap(image);
+                        }
+                    };
+                    imageHandler.post(r);
                 }
             }
         };
