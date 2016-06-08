@@ -1,6 +1,6 @@
 package com.google.sample.imagedownloader;
 
-import android.app.Service;
+import android.app.IntentService;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,25 +13,19 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
-public class DownloaderService extends Intent {
+public class DownloaderService extends IntentService {
+
     public DownloaderService() {
-
+        super("DownloaderService");
     }
 
     @Override
-    public void onCreate() {
-        super.onCreate();
-        Log.i("DownloaderService", "Service Created");
-    }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        super.onStartCommand(intent, flags, startId);
-
-        Log.i("DownloaderService", "Service Started");
+    protected void onHandleIntent(Intent intent) {
         String url = intent.getStringExtra("URL");
-        Bitmap img = getImage(url);
-        return START_NOT_STICKY;
+        Bitmap image = getImage(url);
+        if (url != null) {
+            Log.i("DownloaderService", "Image Download");
+        }
     }
 
     private Bitmap getImage(String url) {
