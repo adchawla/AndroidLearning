@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -20,24 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     ImageView imageView;
 
-    static class ImageHandler extends Handler {
-        private ImageView imageView;
-
-        public ImageHandler(ImageView imageView) {
-            this.imageView = imageView;
-        }
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            //imageView.setImageBitmap(image);
-
-            Bundle bundle = msg.getData();
-            Bitmap image = bundle.getParcelable("IMAGE");
-            imageView.setImageBitmap(image);
-        }
-    }
-
-    ImageHandler imageHandler;
+    Handler mainThreadHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         imageView = (ImageView) findViewById(R.id.imageView);
-        imageHandler = new ImageHandler(imageView);
+        mainThreadHandler = new Handler();
     }
 
     private Bitmap getImage(String url) {
@@ -78,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                             imageView.setImageBitmap(image);
                         }
                     };
-                    imageHandler.post(r);
+                    mainThreadHandler.post(r);
                 }
             }
         };
