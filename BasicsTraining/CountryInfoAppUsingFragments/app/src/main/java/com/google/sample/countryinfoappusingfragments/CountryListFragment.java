@@ -95,9 +95,8 @@ public class CountryListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
-            countryListTextView.setText(getStringFromArrayList(countryList));
-            countrySetChanged = false;
+        countryListTextView.setText(getStringFromArrayList(countryList));
+        countrySetChanged = false;
 
     }
 }
