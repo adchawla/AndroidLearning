@@ -1,6 +1,9 @@
 package com.google.sample.simplelistview;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.util.LruCache;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,12 +26,25 @@ public class CityAdapter extends BaseAdapter {
         TextView tv;
     }
 
+    LruCache<Integer, Bitmap> cache;
+
     public CityAdapter(String[] cities, Context context) {
         this.cities = cities;
         this.context = context;
+
+        final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024 );
+
+        // Use the 1/8th of the available memory for this memory cache.
+        final int cacheSize = maxMemory / 8;
+
+        cache = new LruCache<Integer, Bitmap>(cacheSize) {
+            @Override
+            protected int sizeOf(Integer key, Bitmap value) {
+                return value.getByteCount()/1024;
+            }
+        };
     }
 
-    
     @Override
     public int getCount() {
         return cities.length;
@@ -69,7 +85,14 @@ public class CityAdapter extends BaseAdapter {
         }
 
         textView.setText(cityName);
-        imageView.setImageResource(R.drawable.kings_xi);
+        Bitmap image = cache.get(R.drawable.kings_xi);
+        if (image == null) {
+            BitmapDrawable drawable =
+                    (BitmapDrawable) context.getResources().getDrawable(R.drawable.kings_xi);
+            image = drawable.getBitmap();
+            cache.put(R.drawable.kings_xi, image);
+        }
+        imageView.setImageBitmap(image);
 
         return mainView;
     }
