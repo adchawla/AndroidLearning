@@ -22,9 +22,6 @@
             android:name=".DownloaderService"
             android:enabled="true"
             android:exported="false">
-            <intent-filter>
-                <action android:name="downloaderservice"/>
-            </intent-filter>
         </service>
     </application>
 

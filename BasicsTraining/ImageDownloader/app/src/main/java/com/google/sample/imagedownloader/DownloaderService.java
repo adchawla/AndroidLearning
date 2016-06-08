@@ -4,7 +4,9 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.os.IBinder;
+import android.os.ResultReceiver;
 import android.util.Log;
 
 import java.io.IOException;
@@ -15,6 +17,8 @@ import java.net.URLConnection;
 
 public class DownloaderService extends IntentService {
 
+    ResultReceiver imageReceiver;
+
     public DownloaderService() {
         super("DownloaderService");
     }
@@ -23,8 +27,12 @@ public class DownloaderService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         String url = intent.getStringExtra("URL");
         Bitmap image = getImage(url);
+        imageReceiver = intent.getParcelableExtra("RECEIVER");
         if (url != null) {
             Log.i("DownloaderService", "Image Download");
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("IMAGE",image);
+            imageReceiver.send(101, bundle);
         }
     }
 
