@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Simple List View</string>
+    <string-array name="cities" >
+        <item>New Delhi</item>
+        <item>Noida</item>
+        <item>Gurgaon</item>
+        <item>Greater Noida</item>
+        <item>Bengaluru</item>
+        <item>Mumbai</item>
+    </string-array>
+</resources>
