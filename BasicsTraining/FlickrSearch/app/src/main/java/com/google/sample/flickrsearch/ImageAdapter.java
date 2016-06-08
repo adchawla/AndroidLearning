@@ -18,6 +18,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Created by amandeep on 08/06/16.
@@ -25,10 +27,12 @@ import java.util.ArrayList;
 public class ImageAdapter extends BaseAdapter {
     Context context;
     ArrayList<FlickrItem> items;
+    ExecutorService threadService;
 
     public ImageAdapter(Context context, ArrayList<FlickrItem> items) {
         this.context = context;
         this.items = items;
+        threadService = Executors.newFixedThreadPool(10);
     }
 
     @Override
@@ -75,8 +79,7 @@ public class ImageAdapter extends BaseAdapter {
             }
         };
 
-        Thread th = new Thread(runnable);
-        th.start();
+        threadService.execute(runnable);
         return mainView;
     }
 
