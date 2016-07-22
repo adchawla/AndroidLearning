@@ -27,4 +27,13 @@
         android:src="@mipmap/ic_launcher"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Auto"
+        android:id="@+id/button"
+        android:layout_above="@+id/imageView"
+        android:layout_toEndOf="@+id/downloadBtn"
+        android:onClick="auto" />
 </RelativeLayout>

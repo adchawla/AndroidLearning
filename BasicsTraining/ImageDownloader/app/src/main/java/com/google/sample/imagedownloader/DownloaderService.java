@@ -4,7 +4,6 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Bundle;
 import android.os.IBinder;
 import android.os.ResultReceiver;
 import android.util.Log;
@@ -27,12 +26,11 @@ public class DownloaderService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         String url = intent.getStringExtra("URL");
         Bitmap image = getImage(url);
-        imageReceiver = intent.getParcelableExtra("RECEIVER");
         if (url != null) {
             Log.i("DownloaderService", "Image Download");
-            Bundle bundle = new Bundle();
-            bundle.putParcelable("IMAGE",image);
-            imageReceiver.send(101, bundle);
+            Intent i = new Intent("com.google.sample.imagedownloader.UPDATE_UI");
+            i.putExtra("com.amandeep.IMAGE", image);
+            sendBroadcast(i);
         }
     }
 
